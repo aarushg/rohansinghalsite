@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  rohan-website:
+    build: .
+    container_name: rohan-website
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    # Uncomment below if you're using a reverse proxy like nginx/traefik
+    # and want to bind to a specific host port instead:
+    # ports:
+    #   - "127.0.0.1:8080:80"

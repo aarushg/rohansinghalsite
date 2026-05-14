@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rohan Singhal — Video Editor & Colorist</title>
+  <meta name="description" content="Rohan Singhal is a video editor and colorist based in India, specializing in color grading and post-production for short films." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --bg-card: #111;
+      --text: #f0ede8;
+      --text-muted: #666;
+      --accent: #b8956a;
+      --nav-h: 72px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Film grain overlay */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 9999;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.35;
+    }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px;
+      height: var(--nav-h);
+      transition: background 0.5s, backdrop-filter 0.5s;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 44px; list-style: none; }
+    .nav-links a {
+      font-size: 0.68rem; font-weight: 400;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+      opacity: 0.6; transition: opacity 0.25s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-toggle {
+      display: none; background: none; border: none;
+      cursor: pointer; flex-direction: column; gap: 5px; padding: 6px;
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 1px;
+      background: var(--text); transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none; position: fixed;
+      top: var(--nav-h); left: 0; right: 0; bottom: 0;
+      background: rgba(8,8,8,0.98);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      flex-direction: column; gap: 0; z-index: 199;
+      padding: 40px 52px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem; font-weight: 300;
+      color: var(--text); text-decoration: none;
+      opacity: 0.7; padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: opacity 0.2s;
+    }
+    .nav-mobile a:hover { opacity: 1; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; width: 100vw; height: 100vh;
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+    }
+    .hero-bg { position: absolute; inset: 0; }
+    .hero-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0; transition: opacity 1.4s ease-in-out;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(8,8,8,0.25) 0%,
+        rgba(8,8,8,0.40) 50%,
+        rgba(8,8,8,0.82) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 0 24px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .hero-label {
+      font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 28px;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 9vw, 8rem);
+      font-weight: 300; line-height: 0.95;
+      letter-spacing: 0.02em; color: var(--text);
+      margin-bottom: 44px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+      opacity: 0.7; transition: opacity 0.25s;
+    }
+    .hero-cta::after {
+      content: ''; display: block;
+      width: 40px; height: 1px; background: currentColor;
+      transition: width 0.3s;
+    }
+    .hero-cta:hover { opacity: 1; }
+    .hero-cta:hover::after { width: 60px; }
+
+    /* hero bottom bar */
+    .hero-bottom {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      padding: 0 52px 36px;
+    }
+    .hero-current-project {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem; font-weight: 400; letter-spacing: 0.06em;
+      color: rgba(240,237,232,0.5); transition: color 0.5s;
+    }
+    .hero-indicators {
+      display: flex; gap: 8px; align-items: center;
+    }
+    .hero-dot {
+      width: 20px; height: 1px;
+      background: rgba(255,255,255,0.25); cursor: pointer;
+      transition: background 0.3s, width 0.3s; border: none;
+    }
+    .hero-dot.active { background: var(--text); width: 36px; }
+
+    .hero-scroll {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: 0.4;
+    }
+    .hero-scroll span {
+      font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 52px; background: var(--text);
+      transform-origin: top; animation: lineGrow 2s ease-in-out infinite;
+    }
+    @keyframes lineGrow {
+      0%,100% { transform: scaleY(0.2); opacity: 0.3; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
+
+    /* ─── SHARED SECTION ─── */
+    .section-wrap { padding: 130px 52px; }
+    .section-label {
+      display: block; font-size: 0.6rem; font-weight: 400;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 18px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 300; line-height: 1.08;
+      margin-bottom: 72px;
+    }
+
+    /* ─── PROJECTS ─── */
+    #work { max-width: 1440px; margin: 0 auto; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    .project-card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 16/10; cursor: pointer;
+      background: var(--bg-card);
+    }
+    .project-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: block;
+    }
+    .project-card:hover img { transform: scale(1.06); }
+
+    .project-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(8,8,8,0.9) 0%,
+        rgba(8,8,8,0.3) 40%,
+        rgba(8,8,8,0) 65%
+      );
+      opacity: 0; transition: opacity 0.45s;
+      display: flex; align-items: flex-end;
+      padding: 28px 28px;
+    }
+    .project-card:hover .project-overlay { opacity: 1; }
+
+    .project-meta {}
+    .project-type {
+      display: block; font-size: 0.58rem; letter-spacing: 0.26em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 7px;
+    }
+    .project-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem; font-weight: 400; line-height: 1.15;
+    }
+    .project-year {
+      display: block; font-size: 0.68rem; color: var(--text-muted);
+      margin-top: 5px; letter-spacing: 0.08em;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 5fr 7fr;
+      gap: 96px; align-items: center;
+    }
+    .about-img {
+      position: relative;
+      aspect-ratio: 4/5; overflow: hidden;
+      background: #111;
+    }
+    .about-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(15%);
+      transition: filter 0.4s;
+    }
+    .about-img:hover img { filter: grayscale(0%); }
+    .about-img-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 16px 20px;
+      background: linear-gradient(to top, rgba(8,8,8,0.7), transparent);
+      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(240,237,232,0.45);
+    }
+
+    .about-text .section-title { margin-bottom: 28px; }
+    .about-body p {
+      font-size: 0.92rem; line-height: 1.95;
+      color: rgba(240,237,232,0.72);
+      margin-bottom: 18px;
+    }
+    .about-links {
+      display: flex; gap: 28px; margin-top: 44px; flex-wrap: wrap;
+    }
+    .about-links a {
+      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text); text-decoration: none; opacity: 0.55;
+      padding-bottom: 5px; border-bottom: 1px solid rgba(240,237,232,0.3);
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+    .about-links a:hover { opacity: 1; border-color: var(--text); }
+
+    .about-education {
+      margin-top: 36px; padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .edu-item { display: flex; flex-direction: column; gap: 5px; }
+    .edu-school { font-size: 0.83rem; font-weight: 400; letter-spacing: 0.01em; }
+    .edu-degree { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.03em; }
+
+    .about-tools {
+      margin-top: 28px; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .tools-label {
+      font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--text-muted); display: block; margin-bottom: 14px;
+    }
+    .tools-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tools-list span {
+      font-size: 0.7rem; padding: 5px 13px;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(240,237,232,0.55); letter-spacing: 0.04em;
+    }
+
+    .project-dir {
+      display: block; font-size: 0.62rem;
+      color: rgba(240,237,232,0.45); margin-top: 4px; letter-spacing: 0.03em;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      max-width: 760px; margin: 0 auto;
+      text-align: center;
+    }
+    #contact .section-title { margin-bottom: 12px; }
+    .contact-sub {
+      font-size: 0.88rem; color: rgba(240,237,232,0.5);
+      line-height: 1.85; max-width: 480px;
+      margin: 0 auto 60px; letter-spacing: 0.01em;
+    }
+
+    .contact-form {
+      display: flex; flex-direction: column;
+      gap: 0; text-align: left; margin-bottom: 60px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+    .form-group { display: flex; flex-direction: column; margin-bottom: 36px; }
+    .form-group label {
+      font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 10px;
+    }
+    .form-group input,
+    .form-group textarea {
+      background: transparent; border: none;
+      border-bottom: 1px solid rgba(240,237,232,0.15);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem; font-weight: 300;
+      padding: 8px 0 12px; outline: none; width: 100%;
+      transition: border-color 0.25s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: rgba(240,237,232,0.5); }
+    .form-group textarea { resize: none; height: 100px; }
+
+    .form-submit {
+      align-self: center;
+      background: none; border: 1px solid rgba(240,237,232,0.2);
+      color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 0.65rem;
+      font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase;
+      padding: 18px 52px; cursor: pointer;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .form-submit:hover {
+      border-color: rgba(240,237,232,0.55);
+      background: rgba(240,237,232,0.04);
+    }
+    .form-submit:disabled { opacity: 0.4; cursor: default; }
+
+    .contact-divider {
+      border: none; border-top: 1px solid rgba(255,255,255,0.07);
+      margin: 0 0 44px;
+    }
+    .contact-links {
+      display: flex; justify-content: center;
+      align-items: center; gap: 48px;
+    }
+    .contact-links a {
+      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-muted); text-decoration: none;
+      transition: color 0.25s;
+    }
+    .contact-links a:hover { color: var(--text); }
+    .contact-links-sep {
+      width: 1px; height: 12px; background: rgba(255,255,255,0.12);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 28px 52px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.92rem; letter-spacing: 0.12em; opacity: 0.5;
+    }
+    .footer-copy { font-size: 0.65rem; color: var(--text-muted); }
+
+    /* ─── LIGHTBOX ─── */
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(5,5,5,0.97);
+      flex-direction: column;
+    }
+    #lightbox.open { display: flex; }
+
+    .lb-topbar {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 40px;
+      background: linear-gradient(to bottom, rgba(5,5,5,0.8), transparent);
+    }
+    .lb-info-left { display: flex; flex-direction: column; gap: 4px; }
+    .lb-proj-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 400;
+    }
+    .lb-proj-meta {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .lb-counter { font-size: 0.7rem; color: var(--text-muted); }
+    .lb-close-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text); cursor: pointer; width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: border-color 0.2s, background 0.2s;
+    }
+    .lb-close-btn:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
+
+    .lb-stage {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      position: relative; padding: 90px 80px 100px;
+    }
+    #lb-img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      transition: opacity 0.2s;
+    }
+    .lb-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: none; border: none;
+      color: var(--text); cursor: pointer;
+      font-size: 1.3rem; padding: 20px 24px; opacity: 0.3;
+      transition: opacity 0.2s; z-index: 2;
+    }
+    .lb-btn:hover { opacity: 1; }
+    #lb-prev { left: 0; }
+    #lb-next { right: 0; }
+
+    .lb-filmstrip {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      display: flex; gap: 3px; padding: 16px 40px;
+      overflow-x: auto; scrollbar-width: none;
+      background: linear-gradient(to top, rgba(5,5,5,0.85), transparent);
+    }
+    .lb-filmstrip::-webkit-scrollbar { display: none; }
+    .lb-thumb {
+      flex-shrink: 0; width: 72px; height: 44px;
+      object-fit: cover; cursor: pointer; opacity: 0.3;
+      transition: opacity 0.2s; border: 1px solid transparent;
+    }
+    .lb-thumb.active { opacity: 1; border-color: var(--accent); }
+    .lb-thumb:hover { opacity: 0.75; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      #about { grid-template-columns: 1fr; gap: 56px; }
+      .about-img { aspect-ratio: 16/10; max-width: 560px; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .nav-mobile { padding: 40px 24px; }
+      .section-wrap { padding: 90px 24px; }
+      .hero-bottom { padding: 0 24px 28px; }
+      .hero-scroll { display: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 20px 24px; }
+      .lb-stage { padding: 80px 48px 90px; }
+      .lb-btn { padding: 16px 12px; }
+      .lb-topbar { padding: 20px 24px; }
+      .lb-filmstrip { padding: 12px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">Rohan Singhal</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="#work"    onclick="closeMobileNav()">Work</a>
+  <a href="#about"   onclick="closeMobileNav()">About</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-label">Video Editor &nbsp;·&nbsp; Colorist</span>
+    <h1 class="hero-name">Rohan<br>Singhal</h1>
+    <a class="hero-cta" href="#work">View Work</a>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-current-project" id="heroProjectLabel"></div>
+    <div class="hero-indicators" id="heroIndicators"></div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROJECTS ─── -->
+<section id="work">
+  <div class="section-wrap">
+    <span class="section-label">Selected Work</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="section-wrap" style="display:contents;">
+    <div class="about-img" id="aboutImg">
+      <!-- filled by JS with first still from a project -->
+    </div>
+    <div class="about-text">
+      <span class="section-label">About</span>
+      <h2 class="section-title">Rohan<br>Singhal</h2>
+      <div class="about-body">
+        <p>Rohan Singhal is passionate about telling stories that resonate on a deep emotional level and explore the human condition. He believes in the power of film to connect people, evoke empathy, and challenge perceptions.</p>
+        <p>Growing up in India with a love of watching films, he graduated from Vancouver Film School in 2024 — specializing in Producing and Post-Production, and working across short films, music videos, and branded content as Colorist, Editor, and Producer.</p>
+        <p>With a keen eye for detail and a dedication to authentic visual storytelling, Rohan strives to create work that leaves a lasting impact on audiences.</p>
+      </div>
+
+      <div class="about-education">
+        <div class="edu-item">
+          <span class="edu-school">Vancouver Film School</span>
+          <span class="edu-degree">Diploma in Film Production &nbsp;·&nbsp; 2023–2024</span>
+        </div>
+        <div class="edu-item">
+          <span class="edu-school">H.R. College of Commerce & Economics</span>
+          <span class="edu-degree">Bachelor of Mass Media &nbsp;·&nbsp; 2020–2022</span>
+        </div>
+      </div>
+
+      <div class="about-links">
+        <a href="mailto:rohansinghal021@gmail.com">Email</a>
+        <a href="https://shorturl.at/YzMUh" target="_blank">IMDb</a>
+        <a href="https://instagram.com/" target="_blank">Instagram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="section-wrap">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-title">Let's Work<br>Together</h2>
+    <p class="contact-sub">For project collaborations, festival inquiries, or any questions — I'd love to hear from you.</p>
+
+    <form class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="c-name">Name</label>
+          <input type="text" id="c-name" name="name" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="c-email">Email</label>
+          <input type="email" id="c-email" name="email" required autocomplete="email" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="c-subject">Subject</label>
+        <input type="text" id="c-subject" name="subject" />
+      </div>
+      <div class="form-group">
+        <label for="c-message">Message</label>
+        <textarea id="c-message" name="message" required></textarea>
+      </div>
+      <button type="submit" class="form-submit" id="formBtn">Send Message</button>
+    </form>
+
+    <hr class="contact-divider" />
+    <div class="contact-links">
+      <a href="mailto:rohansinghal021@gmail.com">Email</a>
+      <div class="contact-links-sep"></div>
+      <a href="https://instagram.com/" target="_blank">Instagram</a>
+      <div class="contact-links-sep"></div>
+      <a href="https://shorturl.at/YzMUh" target="_blank">IMDb</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <span class="footer-name">Rohan Singhal</span>
+  <span class="footer-copy">© 2026</span>
+</footer>
+
+<!-- ─── LIGHTBOX ─── -->
+<div id="lightbox">
+  <div class="lb-topbar">
+    <div class="lb-info-left">
+      <div class="lb-proj-title" id="lbTitle"></div>
+      <div class="lb-proj-meta" id="lbMeta"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px;">
+      <span class="lb-counter" id="lbCounter"></span>
+      <button class="lb-close-btn" id="lbClose">&#215;</button>
+    </div>
+  </div>
+  <div class="lb-stage">
+    <button class="lb-btn" id="lb-prev">&#8592;</button>
+    <img id="lb-img" src="" alt="" />
+    <button class="lb-btn" id="lb-next">&#8594;</button>
+  </div>
+  <div class="lb-filmstrip" id="lbFilmstrip"></div>
+</div>
+
+<script>
+// ──────────────────────────────────────────
+// PROJECT DATA
+// ──────────────────────────────────────────
+const PROJECTS = [
+  {
+    id: 'hazel',
+    title: 'Hazel',
+    role: 'Colorist',
+    director: '',
+    year: '2025',
+    cover: 'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.40.1.png',
+    stills: [
+      'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.40.1.png',
+      'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.69.1.png',
+      'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.74.1.png',
+      'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.115.1.png',
+      'Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.38.1.png',
+      'Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.70.1.png',
+      'Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.94.1.png',
+      'Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.101.1.png',
+      'Hazel/Instagram/Post 3/Still 2025-07-03 174102_1.3.1.png',
+      'Hazel/Instagram/Post 3/Still 2025-07-03 174102_1.4.2.png',
+      'Hazel/Instagram/Post 3/Still 2025-07-03 174102_1.134.1.png',
+    ]
+  },
+  {
+    id: 'below-the-surface',
+    title: 'Below the Surface',
+    role: 'Colorist',
+    director: '',
+    year: '2025',
+    cover: 'Below The Surface/Post 1/Still 2025-07-03 175124_1.10.1.png',
+    stills: [
+      'Below The Surface/Post 1/Still 2025-07-03 175124_1.10.1.png',
+      'Below The Surface/Post 1/Still 2025-07-03 175124_1.48.1.png',
+      'Below The Surface/Post 1/Still 2025-07-03 175124_1.153.1.png',
+      'Below The Surface/Post 3/Still 2025-07-03 175124_1.12.1.png',
+      'Below The Surface/Post 3/Still 2025-07-03 175124_1.23.1.png',
+      'Below The Surface/Post 3/Still 2025-07-03 175124_1.94.1.png',
+      'Below The Surface/Post 3/Still 2025-07-03 175124_1.99.1.png',
+    ]
+  },
+  {
+    id: 'unfinished',
+    title: 'Unfinished',
+    role: 'Editor',
+    director: 'Azul Widnicky',
+    year: '2024',
+    cover: 'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.11.1.png',
+    stills: [
+      'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.11.1.png',
+      'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.36.1.png',
+      'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.78.1.png',
+      'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.95.1.png',
+      'Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.48.1.png',
+      'Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.74.1.png',
+      'Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.83.1.png',
+      'Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.113.1.png',
+      'Unfinished (SF)/Post 3/Still 2025-07-03 175919_1.86.1.png',
+    ]
+  },
+  {
+    id: 'pieces-of-us',
+    title: 'Pieces of Us',
+    role: 'Script Supervisor & Colorist',
+    director: 'Sebastian Monge',
+    year: '2024',
+    cover: 'Pieces of Us/1.png',
+    stills: [
+      'Pieces of Us/1.png',
+      'Pieces of Us/2.png',
+      'Pieces of Us/3.png',
+      'Pieces of Us/4.png',
+      'Pieces of Us/5.png',
+      'Pieces of Us/6.png',
+      'Pieces of Us/7.png',
+      'Pieces of Us/8.png',
+      'Pieces of Us/9.png',
+      'Pieces of Us/10.png',
+      'Pieces of Us/Still 2024-09-08 165521_1.24.2.png',
+      'Pieces of Us/Still 2024-09-08 165535_1.26.2.png',
+      'Pieces of Us/Still 2024-09-08 165546_1.28.2.png',
+      'Pieces of Us/Still 2024-09-08 165608_1.31.2.png',
+      'Pieces of Us/Still 2024-09-08 165621_1.32.2.png',
+      'Pieces of Us/Still 2024-09-08 165649_1.35.2.png',
+      'Pieces of Us/Still 2024-09-08 165743_1.36.2.png',
+      'Pieces of Us/Still 2024-09-08 165758_1.38.2.png',
+      'Pieces of Us/Still 2024-09-08 175844_1.41.2.png',
+      'Pieces of Us/Still 2024-09-08 175950_1.23.2.png',
+    ]
+  },
+  {
+    id: 'stay',
+    title: 'Stay',
+    role: 'Colorist',
+    director: 'Satvik Bhatt',
+    year: '2024',
+    cover: 'Stay/Untitled_1.5.1.png',
+    stills: [
+      'Stay/Untitled_1.4.2.png',
+      'Stay/Untitled_1.5.1.png',
+      'Stay/Untitled_1.6.1.png',
+      'Stay/Untitled_1.7.1.png',
+      'Stay/Untitled_1.7.2.png',
+      'Stay/Untitled_1.8.1.png',
+      'Stay/Untitled_1.12.1.png',
+      'Stay/Untitled_1.14.1.png',
+      'Stay/Untitled_1.16.1.png',
+      'Stay/Untitled_1.17.1.png',
+      'Stay/Untitled_1.23.2.png',
+      'Stay/Untitled_1.28.1.png',
+      'Stay/Untitled_1.29.1.png',
+      'Stay/Untitled_1.32.1.png',
+      'Stay/Untitled_1.42.1.png',
+      'Stay/Untitled_1.44.1.png',
+      'Stay/Untitled_1.48.1.png',
+      'Stay/Untitled_1.52.1.png',
+      'Stay/Untitled_2.1.1.png',
+      'Stay/Untitled_2.3.1.png',
+    ]
+  },
+  {
+    id: 'hearsay',
+    title: 'Hearsay',
+    role: 'Colorist',
+    director: 'Yatha Dholakia',
+    year: '2024',
+    cover: 'Hearsay/Untitled_1.2.1.png',
+    stills: [
+      'Hearsay/Untitled_1.2.1.png',
+      'Hearsay/Untitled_1.4.2.png',
+      'Hearsay/Untitled_1.5.1.png',
+      'Hearsay/Untitled_1.6.1.png',
+      'Hearsay/Untitled_1.7.1.png',
+      'Hearsay/Untitled_1.8.1.png',
+      'Hearsay/Untitled_1.9.1.png',
+      'Hearsay/Untitled_1.10.1.png',
+      'Hearsay/Untitled_1.11.1.png',
+      'Hearsay/Untitled_1.14.1.png',
+      'Hearsay/Untitled_1.15.1.png',
+      'Hearsay/Untitled_1.16.1.png',
+    ]
+  },
+  {
+    id: 'sunny-side-up',
+    title: 'Sunny Side-Up',
+    role: 'Colorist',
+    director: 'Satvik Bhatt',
+    year: '2024',
+    cover: 'Sunny Side-Up/Untitled_1.1.1.png',
+    stills: [
+      'Sunny Side-Up/Untitled_1.1.1.png',
+      'Sunny Side-Up/Untitled_1.5.1.png',
+      'Sunny Side-Up/Untitled_1.7.1.png',
+      'Sunny Side-Up/Untitled_1.13.1.png',
+      'Sunny Side-Up/Untitled_1.16.1.png',
+      'Sunny Side-Up/Untitled_1.17.1.png',
+      'Sunny Side-Up/Untitled_1.23.1.png',
+      'Sunny Side-Up/Untitled_1.32.1.png',
+      'Sunny Side-Up/Untitled_1.35.1.png',
+      'Sunny Side-Up/Untitled_1.39.1.png',
+      'Sunny Side-Up/Untitled_1.44.1.png',
+      'Sunny Side-Up/Untitled_1.45.1.png',
+      'Sunny Side-Up/Untitled_1.49.1.png',
+      'Sunny Side-Up/Untitled_1.51.1.png',
+      'Sunny Side-Up/Untitled_1.54.1.png',
+      'Sunny Side-Up/Untitled_1.55.1.png',
+      'Sunny Side-Up/Untitled_1.56.1.png',
+      'Sunny Side-Up/Untitled_1.57.1.png',
+      'Sunny Side-Up/Untitled_1.58.1.png',
+      'Sunny Side-Up/Untitled_1.59.1.png',
+      'Sunny Side-Up/Untitled_1.60.1.png',
+    ]
+  },
+];
+
+// Hero images (one cover per project)
+const HERO_IMAGES = PROJECTS.map(p => ({ src: p.cover, label: p.title }));
+
+// ──────────────────────────────────────────
+// HERO CAROUSEL
+// ──────────────────────────────────────────
+let heroIdx = 0;
+let heroTimer = null;
+
+function initHero() {
+  const bg   = document.getElementById('heroBg');
+  const dots = document.getElementById('heroIndicators');
+  const lbl  = document.getElementById('heroProjectLabel');
+
+  HERO_IMAGES.forEach((item, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+    slide.style.backgroundImage = `url("${item.src}")`;
+    bg.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    dot.onclick = () => heroGo(i);
+    dots.appendChild(dot);
+  });
+
+  lbl.textContent = HERO_IMAGES[0].label;
+  heroTimer = setInterval(() => heroGo((heroIdx + 1) % HERO_IMAGES.length), 5000);
+}
+
+function heroGo(n) {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots   = document.querySelectorAll('.hero-dot');
+  const lbl    = document.getElementById('heroProjectLabel');
+  slides[heroIdx].classList.remove('active');
+  dots[heroIdx].classList.remove('active');
+  heroIdx = n;
+  slides[heroIdx].classList.add('active');
+  dots[heroIdx].classList.add('active');
+  lbl.textContent = HERO_IMAGES[heroIdx].label;
+}
+
+// ──────────────────────────────────────────
+// PROJECTS GRID
+// ──────────────────────────────────────────
+function renderProjects() {
+  const grid = document.getElementById('projectsGrid');
+  PROJECTS.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.onclick = () => lbOpen(p.id);
+
+    const img = document.createElement('img');
+    img.src = p.cover;
+    img.alt = p.title;
+    img.loading = 'lazy';
+
+    const ov = document.createElement('div');
+    ov.className = 'project-overlay';
+    ov.innerHTML = `
+      <div class="project-meta">
+        <span class="project-type">${p.role}</span>
+        <div class="project-name">${p.title}</div>
+        ${p.director ? `<span class="project-dir">Dir. ${p.director}</span>` : ''}
+        ${p.year ? `<span class="project-year">${p.year}</span>` : ''}
+      </div>`;
+
+    card.appendChild(img);
+    card.appendChild(ov);
+    grid.appendChild(card);
+  });
+}
+
+// ──────────────────────────────────────────
+// ABOUT – use a still as the portrait
+// ──────────────────────────────────────────
+function initAbout() {
+  const wrap = document.getElementById('aboutImg');
+  const img  = document.createElement('img');
+  img.src = 'headshot.jpg';
+  img.alt = 'Rohan Singhal';
+  img.loading = 'lazy';
+  const lbl = document.createElement('div');
+  lbl.className = 'about-img-label';
+  lbl.textContent = 'Rohan Singhal';
+  wrap.appendChild(img);
+  wrap.appendChild(lbl);
+}
+
+// ──────────────────────────────────────────
+// LIGHTBOX
+// ──────────────────────────────────────────
+let lb = { project: null, idx: 0 };
+
+function lbOpen(id) {
+  lb.project = PROJECTS.find(p => p.id === id);
+  lb.idx = 0;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  lbBuildFilmstrip();
+  lbUpdate();
+}
+
+function lbClose() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function lbBuildFilmstrip() {
+  const strip = document.getElementById('lbFilmstrip');
+  strip.innerHTML = '';
+  lb.project.stills.forEach((src, i) => {
+    const t = document.createElement('img');
+    t.src = src;
+    t.alt = '';
+    t.className = 'lb-thumb' + (i === 0 ? ' active' : '');
+    t.onclick = () => { lb.idx = i; lbUpdate(); };
+    strip.appendChild(t);
+  });
+}
+
+function lbUpdate() {
+  const img = document.getElementById('lb-img');
+  img.style.opacity = '0';
+  setTimeout(() => {
+    img.src = lb.project.stills[lb.idx];
+    img.style.opacity = '1';
+  }, 100);
+
+  document.getElementById('lbTitle').textContent = lb.project.title;
+  document.getElementById('lbMeta').textContent  = lb.project.role + (lb.project.year ? ' · ' + lb.project.year : '') + (lb.project.director ? ' · Dir. ' + lb.project.director : '');
+  document.getElementById('lbCounter').textContent = `${lb.idx + 1} / ${lb.project.stills.length}`;
+
+  document.querySelectorAll('.lb-thumb').forEach((t, i) => {
+    t.classList.toggle('active', i === lb.idx);
+  });
+
+  // scroll filmstrip
+  const strip = document.getElementById('lbFilmstrip');
+  const active = strip.children[lb.idx];
+  if (active) active.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+}
+
+function lbNav(dir) {
+  lb.idx = (lb.idx + dir + lb.project.stills.length) % lb.project.stills.length;
+  lbUpdate();
+}
+
+document.getElementById('lb-prev').onclick = () => lbNav(-1);
+document.getElementById('lb-next').onclick = () => lbNav(1);
+document.getElementById('lbClose').onclick  = lbClose;
+
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) lbClose();
+});
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'ArrowLeft')  lbNav(-1);
+  if (e.key === 'Escape')     lbClose();
+});
+
+// ──────────────────────────────────────────
+// NAVBAR SCROLL
+// ──────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+// ──────────────────────────────────────────
+// MOBILE NAV
+// ──────────────────────────────────────────
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navToggle').classList.toggle('open');
+  document.getElementById('navMobile').classList.toggle('open');
+});
+
+function closeMobileNav() {
+  document.getElementById('navToggle').classList.remove('open');
+  document.getElementById('navMobile').classList.remove('open');
+}
+
+// ──────────────────────────────────────────
+// CONTACT FORM
+// ──────────────────────────────────────────
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('formBtn');
+  btn.textContent = 'Sent ✓';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = 'Send Message';
+    btn.disabled = false;
+    this.reset();
+  }, 4000);
+});
+
+// ──────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────
+initHero();
+renderProjects();
+initAbout();
+</script>
+</body>
+</html>
