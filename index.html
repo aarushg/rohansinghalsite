@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rohan Singhal — Video Editor & Colorist</title>
-  <meta name="description" content="Rohan Singhal is a video editor and colorist based in India, specializing in color grading and post-production for short films." />
+  <title>ROHAN SINGHAL — Film Maker & Colorist</title>
+  <meta name="description" content="ROHAN SINGHAL is a film maker and colorist based in India, specializing in color grading and post-production for short films." />
+  <link rel="icon" href="logo.jpeg" type="image/jpeg" />
+  <link rel="apple-touch-icon" href="logo.jpeg" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -13,9 +16,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #080808;
+      --bg: #000;
       --bg-card: #111;
-      --text: #f0ede8;
+      --text: rgb(251, 251, 224);
       --text-muted: #666;
       --accent: #b8956a;
       --nav-h: 72px;
@@ -26,7 +29,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Satoshi', 'Inter', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
@@ -60,6 +63,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.04);
     }
     .nav-logo {
+      display: inline-flex; align-items: center; gap: 12px;
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.15rem; font-weight: 600;
       letter-spacing: 0.1em;
@@ -241,22 +245,24 @@
       );
       opacity: 0; transition: opacity 0.45s;
       display: flex; align-items: flex-end;
-      padding: 28px 28px;
+      padding: 34px 32px;
     }
     .project-card:hover .project-overlay { opacity: 1; }
 
     .project-meta {}
     .project-type {
-      display: block; font-size: 0.58rem; letter-spacing: 0.26em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 7px;
+      display: block; font-size: 0.72rem; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+      font-family: 'Satoshi', 'Inter', sans-serif; font-weight: 500;
     }
     .project-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.55rem; font-weight: 400; line-height: 1.15;
+      font-size: clamp(2rem, 2.35vw, 2.85rem); font-weight: 400; line-height: 1.02;
     }
     .project-year {
-      display: block; font-size: 0.68rem; color: var(--text-muted);
-      margin-top: 5px; letter-spacing: 0.08em;
+      display: block; font-size: 0.8rem; color: rgba(240,237,232,0.68);
+      margin-top: 8px; letter-spacing: 0.08em;
+      font-family: 'Satoshi', 'Inter', sans-serif; font-weight: 400;
     }
 
     /* ─── ABOUT ─── */
@@ -326,8 +332,9 @@
     }
 
     .project-dir {
-      display: block; font-size: 0.62rem;
-      color: rgba(240,237,232,0.45); margin-top: 4px; letter-spacing: 0.03em;
+      display: block; font-size: 0.78rem;
+      color: rgba(240,237,232,0.68); margin-top: 6px; letter-spacing: 0.03em;
+      font-family: 'Satoshi', 'Inter', sans-serif; font-weight: 400;
     }
 
     /* ─── CONTACT ─── */
@@ -357,7 +364,7 @@
       background: transparent; border: none;
       border-bottom: 1px solid rgba(240,237,232,0.15);
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Satoshi', 'Inter', sans-serif;
       font-size: 0.88rem; font-weight: 300;
       padding: 8px 0 12px; outline: none; width: 100%;
       transition: border-color 0.25s;
@@ -370,7 +377,7 @@
       align-self: center;
       background: none; border: 1px solid rgba(240,237,232,0.2);
       color: var(--text);
-      font-family: 'Inter', sans-serif; font-size: 0.65rem;
+      font-family: 'Satoshi', 'Inter', sans-serif; font-size: 0.65rem;
       font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase;
       padding: 18px 52px; cursor: pointer;
       transition: border-color 0.25s, background 0.25s;
@@ -418,12 +425,20 @@
       flex-direction: column;
     }
     #lightbox.open { display: flex; }
+    #lightbox.image-mode .lb-gallery { display: none; }
+    #lightbox.image-mode .lb-stage,
+    #lightbox.image-mode .lb-filmstrip { display: flex; }
+    #lightbox.gallery-mode .lb-gallery { display: grid; }
+    #lightbox.gallery-mode .lb-stage,
+    #lightbox.gallery-mode .lb-filmstrip { display: none; }
 
     .lb-topbar {
-      position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+      position: relative; z-index: 2;
       display: flex; align-items: center; justify-content: space-between;
       padding: 24px 40px;
-      background: linear-gradient(to bottom, rgba(5,5,5,0.8), transparent);
+      background: rgba(8,8,8,0.98);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
     }
     .lb-info-left { display: flex; flex-direction: column; gap: 4px; }
     .lb-proj-title {
@@ -445,7 +460,29 @@
 
     .lb-stage {
       flex: 1; display: flex; align-items: center; justify-content: center;
-      position: relative; padding: 90px 80px 100px;
+      position: relative; padding: 36px 80px 100px;
+    }
+    .lb-gallery {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 3px;
+      overflow-y: auto;
+      padding: 28px 40px 40px;
+    }
+    .lb-gallery-img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+      background: #111;
+      opacity: 0.82;
+      transition: opacity 0.2s, transform 0.35s;
+    }
+    .lb-gallery-img:hover {
+      opacity: 1;
+      transform: scale(1.015);
     }
     #lb-img {
       max-width: 100%; max-height: 100%;
@@ -493,9 +530,12 @@
       .hero-bottom { padding: 0 24px 28px; }
       .hero-scroll { display: none; }
       .projects-grid { grid-template-columns: 1fr; }
+      .project-overlay { padding: 30px 26px; }
+      .project-name { font-size: clamp(2rem, 11vw, 3rem); }
       .form-row { grid-template-columns: 1fr; }
       footer { padding: 20px 24px; }
-      .lb-stage { padding: 80px 48px 90px; }
+      .lb-stage { padding: 28px 48px 90px; }
+      .lb-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 22px 24px 28px; }
       .lb-btn { padding: 16px 12px; }
       .lb-topbar { padding: 20px 24px; }
       .lb-filmstrip { padding: 12px 24px; }
@@ -506,7 +546,7 @@
 
 <!-- ─── NAV ─── -->
 <nav id="navbar">
-  <a class="nav-logo" href="#">Rohan Singhal</a>
+  <a class="nav-logo" href="#">ROHAN SINGHAL</a>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#about">About</a></li>
@@ -527,8 +567,8 @@
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <span class="hero-label">Video Editor &nbsp;·&nbsp; Colorist</span>
-    <h1 class="hero-name">Rohan<br>Singhal</h1>
+    <span class="hero-label">Film Maker &nbsp;·&nbsp; Colorist</span>
+    <h1 class="hero-name">ROHAN<br>SINGHAL</h1>
     <a class="hero-cta" href="#work">View Work</a>
   </div>
   <div class="hero-bottom">
@@ -558,11 +598,11 @@
     </div>
     <div class="about-text">
       <span class="section-label">About</span>
-      <h2 class="section-title">Rohan<br>Singhal</h2>
+      <h2 class="section-title">ROHAN<br>SINGHAL</h2>
       <div class="about-body">
-        <p>Rohan Singhal is passionate about telling stories that resonate on a deep emotional level and explore the human condition. He believes in the power of film to connect people, evoke empathy, and challenge perceptions.</p>
+        <p>ROHAN SINGHAL is passionate about telling stories that resonate on a deep emotional level and explore the human condition. He believes in the power of film to connect people, evoke empathy, and challenge perceptions.</p>
         <p>Growing up in India with a love of watching films, he graduated from Vancouver Film School in 2024 — specializing in Producing and Post-Production, and working across short films, music videos, and branded content as Colorist, Editor, and Producer.</p>
-        <p>With a keen eye for detail and a dedication to authentic visual storytelling, Rohan strives to create work that leaves a lasting impact on audiences.</p>
+        <p>With a keen eye for detail and a dedication to authentic visual storytelling, ROHAN strives to create work that leaves a lasting impact on audiences.</p>
       </div>
 
       <div class="about-education">
@@ -578,8 +618,8 @@
 
       <div class="about-links">
         <a href="mailto:rohansinghal021@gmail.com">Email</a>
-        <a href="https://shorturl.at/YzMUh" target="_blank">IMDb</a>
-        <a href="https://instagram.com/" target="_blank">Instagram</a>
+        <a href="https://www.linkedin.com/in/singhalrohan21" target="_blank">LinkedIn</a>
+        <a href="https://www.instagram.com/rohan.singhal09/">Instagram</a>
       </div>
     </div>
   </div>
@@ -618,16 +658,16 @@
     <div class="contact-links">
       <a href="mailto:rohansinghal021@gmail.com">Email</a>
       <div class="contact-links-sep"></div>
-      <a href="https://instagram.com/" target="_blank">Instagram</a>
+      <a href="https://www.instagram.com/rohan.singhal09/">Instagram</a>
       <div class="contact-links-sep"></div>
-      <a href="https://shorturl.at/YzMUh" target="_blank">IMDb</a>
+      <a href="https://www.linkedin.com/in/singhalrohan21" target="_blank">LinkedIn</a>
     </div>
   </div>
 </section>
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <span class="footer-name">Rohan Singhal</span>
+  <span class="footer-name">ROHAN SINGHAL</span>
   <span class="footer-copy">© 2026</span>
 </footer>
 
@@ -648,6 +688,7 @@
     <img id="lb-img" src="" alt="" />
     <button class="lb-btn" id="lb-next">&#8594;</button>
   </div>
+  <div class="lb-gallery" id="lbGallery"></div>
   <div class="lb-filmstrip" id="lbFilmstrip"></div>
 </div>
 
@@ -657,90 +698,249 @@
 // ──────────────────────────────────────────
 const PROJECTS = [
   {
-    id: 'hazel',
-    title: 'Hazel',
+    id: 'breaking-bed',
+    title: 'Breaking Bed',
+    type: 'Short Film',
     role: 'Colorist',
-    director: '',
-    year: '2025',
-    cover: 'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.40.1.png',
+    director: 'Yatha Dholakia',
+    dop: 'Shreyash Sarda',
+    year: '2024',
+    cover: 'optimized/Breaking Bed (SF)/Cover Photo (BB).jpg',
     stills: [
-      'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.40.1.png',
-      'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.69.1.png',
-      'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.74.1.png',
-      'Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.115.1.png',
-      'Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.38.1.png',
-      'Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.70.1.png',
-      'Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.94.1.png',
-      'Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.101.1.png',
-      'Hazel/Instagram/Post 3/Still 2025-07-03 174102_1.3.1.png',
-      'Hazel/Instagram/Post 3/Still 2025-07-03 174102_1.4.2.png',
-      'Hazel/Instagram/Post 3/Still 2025-07-03 174102_1.134.1.png',
+      'optimized/Breaking Bed (SF)/Cover Photo (BB).jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.3.1.POST.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.5.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.8.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.12.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.15.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.37.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.63.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.68.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.72.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.76.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.81.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.102.1.jpg',
+      'optimized/Breaking Bed (SF)/Still 2026-05-14 181355_1.118.1.jpg',
+    ]
+  },
+  {
+    id: 'salta',
+    title: 'Salta',
+    type: 'Short Film',
+    role: 'Colorist',
+    director: 'Sara Giannella',
+    dop: 'Safí Z.',
+    year: '2024',
+    cover: 'optimized/Salta/Cover Photo (Salta).jpg',
+    stills: [
+      'optimized/Salta/Cover Photo (Salta).jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.2.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.6.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.18.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.24.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.31.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.40.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.43.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.47.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.52.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.58.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.64.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.77.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_1.89.1.jpg',
+      'optimized/Salta/Still 2026-04-07 131514_2.1.1.jpg',
+    ]
+  },
+  {
+    id: 'mr-vincent',
+    title: 'Mr. Vincent',
+    type: 'Short Film',
+    role: 'Colorist',
+    director: 'Ulrik Leskovsky',
+    dop: 'Sanya Khanna',
+    year: '2025',
+    cover: 'optimized/Mr. Vincent/Post 3/Cover Photo (Mr. Vincent).jpg',
+    stills: [
+      'optimized/Mr. Vincent/Post 3/Cover Photo (Mr. Vincent).jpg',
+      'optimized/Mr. Vincent/Post 1/Still 2026-04-09 160358_1.1.1.jpg',
+      'optimized/Mr. Vincent/Post 1/Still 2026-04-09 160358_1.5.1.jpg',
+      'optimized/Mr. Vincent/Post 1/Still 2026-04-09 160358_1.14.1.jpg',
+      'optimized/Mr. Vincent/Post 1/Still 2026-04-09 160358_1.27.1.jpg',
+      'optimized/Mr. Vincent/Post 1/Still 2026-04-09 160358_1.40.1.jpg',
+      'optimized/Mr. Vincent/Post 2/Still 2026-04-09 160358_1.42.1.jpg',
+      'optimized/Mr. Vincent/Post 2/Still 2026-04-09 160358_1.52.1.jpg',
+      'optimized/Mr. Vincent/Post 2/Still 2026-04-09 160358_1.61.1.jpg',
+      'optimized/Mr. Vincent/Post 3/Still 2026-04-09 160358_1.65.1.jpg',
+      'optimized/Mr. Vincent/Post 3/Still 2026-04-09 160358_1.76.1.jpg',
+      'optimized/Mr. Vincent/Post 3/Still 2026-04-09 160358_1.87.1.jpg',
+      'optimized/Mr. Vincent/Post 3/Still 2026-04-09 160358_1.91.1.jpg',
     ]
   },
   {
     id: 'below-the-surface',
     title: 'Below the Surface',
+    type: 'Short Film',
     role: 'Colorist',
-    director: '',
+    director: 'Paulina Franzén',
+    dop: 'Sanya Khanna',
     year: '2025',
-    cover: 'Below The Surface/Post 1/Still 2025-07-03 175124_1.10.1.png',
+    cover: 'optimized/Below The Surface/Post 2/Cover Photo (BTS).jpg',
     stills: [
-      'Below The Surface/Post 1/Still 2025-07-03 175124_1.10.1.png',
-      'Below The Surface/Post 1/Still 2025-07-03 175124_1.48.1.png',
-      'Below The Surface/Post 1/Still 2025-07-03 175124_1.153.1.png',
-      'Below The Surface/Post 3/Still 2025-07-03 175124_1.12.1.png',
-      'Below The Surface/Post 3/Still 2025-07-03 175124_1.23.1.png',
-      'Below The Surface/Post 3/Still 2025-07-03 175124_1.94.1.png',
-      'Below The Surface/Post 3/Still 2025-07-03 175124_1.99.1.png',
+      'optimized/Below The Surface/Post 2/Cover Photo (BTS).jpg',
+      'optimized/Below The Surface/Post 1/Still 2025-07-03 175124_1.10.1.jpg',
+      'optimized/Below The Surface/Post 1/Still 2025-07-03 175124_1.48.1.jpg',
+      'optimized/Below The Surface/Post 1/Still 2025-07-03 175124_1.91.1.jpg',
+      'optimized/Below The Surface/Post 1/Still 2025-07-03 175124_1.153.1.jpg',
+      'optimized/Below The Surface/Post 2/Still 2025-07-03 175124_1.14.1.jpg',
+      'optimized/Below The Surface/Post 2/Still 2025-07-03 175124_1.57.1.jpg',
+      'optimized/Below The Surface/Post 2/Still 2025-07-03 175124_1.123.1.jpg',
+      'optimized/Below The Surface/Post 3/Still 2025-07-03 175124_1.12.1.jpg',
+      'optimized/Below The Surface/Post 3/Still 2025-07-03 175124_1.23.1.jpg',
+      'optimized/Below The Surface/Post 3/Still 2025-07-03 175124_1.94.1.jpg',
+      'optimized/Below The Surface/Post 3/Still 2025-07-03 175124_1.99.1.jpg',
+    ]
+  },
+  {
+    id: 'hazel',
+    title: 'Hazel',
+    type: 'Short Film',
+    role: 'Colorist',
+    director: 'Alexander Ullberg',
+    dop: 'Shreyash Sarda',
+    year: '2023',
+    cover: 'optimized/Hazel/Instagram/Post 1/Cover Photo (Hazel).jpg',
+    stills: [
+      'optimized/Hazel/Instagram/Post 1/Cover Photo (Hazel).jpg',
+      'optimized/Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.69.1.jpg',
+      'optimized/Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.74.1.jpg',
+      'optimized/Hazel/Instagram/Post 1/Still 2025-07-03 174102_1.115.1.jpg',
+      'optimized/Hazel/Instagram/Post 1/Still 2025-08-31 180631_1.1.2.jpg',
+      'optimized/Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.38.1.jpg',
+      'optimized/Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.70.1.jpg',
+      'optimized/Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.94.1.jpg',
+      'optimized/Hazel/Instagram/Post 2/Still 2025-07-03 174102_1.101.1.jpg',
+      'optimized/Hazel/Instagram/Post 2/Still 2025-08-31 180415_1.1.2.jpg',
+      'optimized/Hazel/Instagram/Post 3/Still 2025-07-03 174102_1.3.1.jpg',
+      'optimized/Hazel/Instagram/Post 3/Still 2025-07-03 174102_1.4.2.jpg',
+      'optimized/Hazel/Instagram/Post 3/Still 2025-07-03 174102_1.134.1.jpg',
+      'optimized/Hazel/Instagram/Post 3/Still 2025-08-31 180243_1.1.1.jpg',
+      'optimized/Hazel/Instagram/Post 3/Still 2025-08-31 180631_1.1.1.jpg',
+    ]
+  },
+  {
+    id: 'ishtam-web',
+    title: 'Ishtam',
+    type: 'Music Video',
+    role: 'Colorist',
+    directorLabel: 'Director/Singer',
+    director: 'Deepa Unnikrishnan (Dee MC)',
+    dp: 'Nico Paprota',
+    year: '2025',
+    cover: 'optimized/Ishtam Web/Post 1/Cover Photo.jpg',
+    stills: [
+      'optimized/Ishtam Web/Post 1/Cover Photo.jpg',
+      'optimized/Ishtam Web/Post 1/Still 2025-01-22 162955_1.8.1.jpg',
+      'optimized/Ishtam Web/Post 1/Still 2025-01-22 162955_1.32.1.jpg',
+      'optimized/Ishtam Web/Post 1/Still 2025-01-22 162955_1.48.1.jpg',
+      'optimized/Ishtam Web/Post 1/Still 2025-01-22 162955_1.98.1.jpg',
+      'optimized/Ishtam Web/Post 1/Still 2025-01-22 162955_1.108.1.jpg',
+      'optimized/Ishtam Web/Post 1/Still 2025-01-22 162955_1.110.1.jpg',
+      'optimized/Ishtam Web/Post 1/Still 2025-01-28 172402_1.80.2.jpg',
+      'optimized/Ishtam Web/Post 2/Still 2025-01-22 162955_1.12.1.jpg',
+      'optimized/Ishtam Web/Post 2/Still 2025-01-22 162955_1.27.1.jpg',
+      'optimized/Ishtam Web/Post 2/Still 2025-01-22 162955_1.55.1.jpg',
+      'optimized/Ishtam Web/Post 2/Still 2025-01-22 162955_1.59.1.jpg',
+      'optimized/Ishtam Web/Post 2/Still 2025-01-22 162955_1.66.1.jpg',
+      'optimized/Ishtam Web/Post 2/Still 2025-01-22 162955_1.86.1.jpg',
+      'optimized/Ishtam Web/Post 2/Still 2025-01-22 162955_1.91.1.jpg',
+      'optimized/Ishtam Web/Post 2/Still 2025-01-22 162955_1.104.2.jpg',
+      'optimized/Ishtam Web/Post 3/Still 2025-01-22 162955_1.24.1.jpg',
+      'optimized/Ishtam Web/Post 3/Still 2025-01-22 162955_1.45.1.jpg',
+      'optimized/Ishtam Web/Post 3/Still 2025-01-22 162955_1.56.1.jpg',
+      'optimized/Ishtam Web/Post 3/Still 2025-01-22 162955_1.60.1.jpg',
+      'optimized/Ishtam Web/Post 3/Still 2025-01-22 162955_1.83.1.jpg',
+      'optimized/Ishtam Web/Post 3/Still 2025-01-22 162955_1.96.1.jpg',
+      'optimized/Ishtam Web/Post 3/Still 2025-01-22 162955_1.107.1.jpg',
+      'optimized/Ishtam Web/Post 3/Still 2025-01-22 162955_1.111.2.jpg',
+    ]
+  },
+  {
+    id: 'disco-toilet',
+    title: 'Disco Toilet AKA Slighty Lighter',
+    type: 'Short Film',
+    role: 'Colorist',
+    director: 'Burak Çolak',
+    dop: 'Satvik Bhatt',
+    year: '2025',
+    cover: 'optimized/Disco Toilet/Post 3/Cover Photo Disco Toilet.jpg',
+    stills: [
+      'optimized/Disco Toilet/Post 3/Cover Photo Disco Toilet.jpg',
+      'optimized/Disco Toilet/Post 1/Still 2025-09-25 135738_1.4.1.jpg',
+      'optimized/Disco Toilet/Post 1/Still 2025-09-25 135738_1.9.1.jpg',
+      'optimized/Disco Toilet/Post 1/Still 2025-09-25 135738_1.33.1.jpg',
+      'optimized/Disco Toilet/Post 1/Still 2025-09-25 135738_1.65.1.jpg',
+      'optimized/Disco Toilet/Post 1/Still 2025-09-25 152155_1.10.1.POST.jpg',
+      'optimized/Disco Toilet/Post 2/Still 2025-09-25 135738_1.11.1.jpg',
+      'optimized/Disco Toilet/Post 2/Still 2025-09-25 135738_1.17.1.jpg',
+      'optimized/Disco Toilet/Post 2/Still 2025-09-25 135738_1.26.1.jpg',
+      'optimized/Disco Toilet/Post 2/Still 2025-09-25 135738_1.38.1.jpg',
+      'optimized/Disco Toilet/Post 3/Still 2025-09-25 135738_1.42.1.jpg',
+      'optimized/Disco Toilet/Post 3/Still 2025-09-25 135738_1.51.1.jpg',
+      'optimized/Disco Toilet/Post 3/Still 2025-09-25 142645_1.45.1.jpg',
+      'optimized/Disco Toilet/Post 3/Still 2025-09-25 142645_1.50.2.jpg',
     ]
   },
   {
     id: 'unfinished',
     title: 'Unfinished',
-    role: 'Editor',
-    director: 'Azul Widnicky',
-    year: '2024',
-    cover: 'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.11.1.png',
+    type: 'Short Film',
+    role: 'Colorist',
+    director: 'Colin Reed',
+    dop: 'Swapnaj Kadam',
+    year: '2025',
+    cover: 'optimized/Unfinished (SF)/Post 2/Cover Photo (Unfinished).jpg',
     stills: [
-      'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.11.1.png',
-      'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.36.1.png',
-      'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.78.1.png',
-      'Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.95.1.png',
-      'Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.48.1.png',
-      'Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.74.1.png',
-      'Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.83.1.png',
-      'Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.113.1.png',
-      'Unfinished (SF)/Post 3/Still 2025-07-03 175919_1.86.1.png',
+      'optimized/Unfinished (SF)/Post 2/Cover Photo (Unfinished).jpg',
+      'optimized/Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.11.1.jpg',
+      'optimized/Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.36.1.jpg',
+      'optimized/Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.78.1.jpg',
+      'optimized/Unfinished (SF)/Post 1/Still 2025-07-03 175919_1.95.1.jpg',
+      'optimized/Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.48.1.jpg',
+      'optimized/Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.74.1.jpg',
+      'optimized/Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.83.1.jpg',
+      'optimized/Unfinished (SF)/Post 2/Still 2025-07-03 175919_1.113.1.jpg',
+      'optimized/Unfinished (SF)/Post 3/Still 2025-07-03 175919_1.86.1.jpg',
     ]
   },
   {
     id: 'pieces-of-us',
     title: 'Pieces of Us',
+    type: 'Short Film',
     role: 'Script Supervisor & Colorist',
-    director: 'Sebastian Monge',
+    director: 'Sebastián Monge',
+    dop: 'Ellie Wang',
     year: '2024',
-    cover: 'Pieces of Us/1.png',
+    cover: 'optimized/Pieces of Us/Cover Photo (POU).jpg',
     stills: [
-      'Pieces of Us/1.png',
-      'Pieces of Us/2.png',
-      'Pieces of Us/3.png',
-      'Pieces of Us/4.png',
-      'Pieces of Us/5.png',
-      'Pieces of Us/6.png',
-      'Pieces of Us/7.png',
-      'Pieces of Us/8.png',
-      'Pieces of Us/9.png',
-      'Pieces of Us/10.png',
-      'Pieces of Us/Still 2024-09-08 165521_1.24.2.png',
-      'Pieces of Us/Still 2024-09-08 165535_1.26.2.png',
-      'Pieces of Us/Still 2024-09-08 165546_1.28.2.png',
-      'Pieces of Us/Still 2024-09-08 165608_1.31.2.png',
-      'Pieces of Us/Still 2024-09-08 165621_1.32.2.png',
-      'Pieces of Us/Still 2024-09-08 165649_1.35.2.png',
-      'Pieces of Us/Still 2024-09-08 165743_1.36.2.png',
-      'Pieces of Us/Still 2024-09-08 165758_1.38.2.png',
-      'Pieces of Us/Still 2024-09-08 175844_1.41.2.png',
-      'Pieces of Us/Still 2024-09-08 175950_1.23.2.png',
+      'optimized/Pieces of Us/Cover Photo (POU).jpg',
+      'optimized/Pieces of Us/1.jpg',
+      'optimized/Pieces of Us/2.jpg',
+      'optimized/Pieces of Us/3.jpg',
+      'optimized/Pieces of Us/4.jpg',
+      'optimized/Pieces of Us/5.jpg',
+      'optimized/Pieces of Us/6.jpg',
+      'optimized/Pieces of Us/7.jpg',
+      'optimized/Pieces of Us/8.jpg',
+      'optimized/Pieces of Us/9.jpg',
+      'optimized/Pieces of Us/10.jpg',
+      'optimized/Pieces of Us/Still 2024-09-08 165521_1.24.2.jpg',
+      'optimized/Pieces of Us/Still 2024-09-08 165535_1.26.2.jpg',
+      'optimized/Pieces of Us/Still 2024-09-08 165546_1.28.2.jpg',
+      'optimized/Pieces of Us/Still 2024-09-08 165621_1.32.2.jpg',
+      'optimized/Pieces of Us/Still 2024-09-08 165649_1.35.2.jpg',
+      'optimized/Pieces of Us/Still 2024-09-08 165743_1.36.2.jpg',
+      'optimized/Pieces of Us/Still 2024-09-08 165758_1.38.2.jpg',
+      'optimized/Pieces of Us/Still 2024-09-08 175844_1.41.2.jpg',
+      'optimized/Pieces of Us/Still 2024-09-08 175950_1.23.2.jpg',
     ]
   },
   {
@@ -749,50 +949,52 @@ const PROJECTS = [
     role: 'Colorist',
     director: 'Satvik Bhatt',
     year: '2024',
-    cover: 'Stay/Untitled_1.5.1.png',
+    cover: 'optimized/Stay/Cover Photo (Stay).jpg',
     stills: [
-      'Stay/Untitled_1.4.2.png',
-      'Stay/Untitled_1.5.1.png',
-      'Stay/Untitled_1.6.1.png',
-      'Stay/Untitled_1.7.1.png',
-      'Stay/Untitled_1.7.2.png',
-      'Stay/Untitled_1.8.1.png',
-      'Stay/Untitled_1.12.1.png',
-      'Stay/Untitled_1.14.1.png',
-      'Stay/Untitled_1.16.1.png',
-      'Stay/Untitled_1.17.1.png',
-      'Stay/Untitled_1.23.2.png',
-      'Stay/Untitled_1.28.1.png',
-      'Stay/Untitled_1.29.1.png',
-      'Stay/Untitled_1.32.1.png',
-      'Stay/Untitled_1.42.1.png',
-      'Stay/Untitled_1.44.1.png',
-      'Stay/Untitled_1.48.1.png',
-      'Stay/Untitled_1.52.1.png',
-      'Stay/Untitled_2.1.1.png',
-      'Stay/Untitled_2.3.1.png',
+      'optimized/Stay/Cover Photo (Stay).jpg',
+      'optimized/Stay/Untitled_1.4.2.jpg',
+      'optimized/Stay/Untitled_1.5.1.jpg',
+      'optimized/Stay/Untitled_1.6.1.jpg',
+      'optimized/Stay/Untitled_1.7.1.jpg',
+      'optimized/Stay/Untitled_1.7.2.jpg',
+      'optimized/Stay/Untitled_1.8.1.jpg',
+      'optimized/Stay/Untitled_1.12.1.jpg',
+      'optimized/Stay/Untitled_1.14.1.jpg',
+      'optimized/Stay/Untitled_1.16.1.jpg',
+      'optimized/Stay/Untitled_1.17.1.jpg',
+      'optimized/Stay/Untitled_1.23.2.jpg',
+      'optimized/Stay/Untitled_1.28.1.jpg',
+      'optimized/Stay/Untitled_1.29.1.jpg',
+      'optimized/Stay/Untitled_1.32.1.jpg',
+      'optimized/Stay/Untitled_1.42.1.jpg',
+      'optimized/Stay/Untitled_1.44.1.jpg',
+      'optimized/Stay/Untitled_1.48.1.jpg',
+      'optimized/Stay/Untitled_2.1.1.jpg',
+      'optimized/Stay/Untitled_2.3.1.jpg',
     ]
   },
   {
     id: 'hearsay',
     title: 'Hearsay',
+    type: 'Short Film',
     role: 'Colorist',
     director: 'Yatha Dholakia',
-    year: '2024',
-    cover: 'Hearsay/Untitled_1.2.1.png',
+    dop: 'Shreyash Sarda',
+    year: '2023',
+    cover: 'optimized/Hearsay/Cover Photo (Hearsay).jpg',
     stills: [
-      'Hearsay/Untitled_1.2.1.png',
-      'Hearsay/Untitled_1.4.2.png',
-      'Hearsay/Untitled_1.5.1.png',
-      'Hearsay/Untitled_1.6.1.png',
-      'Hearsay/Untitled_1.7.1.png',
-      'Hearsay/Untitled_1.8.1.png',
-      'Hearsay/Untitled_1.9.1.png',
-      'Hearsay/Untitled_1.10.1.png',
-      'Hearsay/Untitled_1.11.1.png',
-      'Hearsay/Untitled_1.14.1.png',
-      'Hearsay/Untitled_1.15.1.png',
-      'Hearsay/Untitled_1.16.1.png',
+      'optimized/Hearsay/Cover Photo (Hearsay).jpg',
+      'optimized/Hearsay/Untitled_1.2.1.jpg',
+      'optimized/Hearsay/Untitled_1.4.2.jpg',
+      'optimized/Hearsay/Untitled_1.5.1.jpg',
+      'optimized/Hearsay/Untitled_1.6.1.jpg',
+      'optimized/Hearsay/Untitled_1.7.1.jpg',
+      'optimized/Hearsay/Untitled_1.8.1.jpg',
+      'optimized/Hearsay/Untitled_1.9.1.jpg',
+      'optimized/Hearsay/Untitled_1.11.1.jpg',
+      'optimized/Hearsay/Untitled_1.14.1.jpg',
+      'optimized/Hearsay/Untitled_1.15.1.jpg',
+      'optimized/Hearsay/Untitled_1.16.1.jpg',
     ]
   },
   {
@@ -801,35 +1003,63 @@ const PROJECTS = [
     role: 'Colorist',
     director: 'Satvik Bhatt',
     year: '2024',
-    cover: 'Sunny Side-Up/Untitled_1.1.1.png',
+    cover: 'optimized/Sunny Side-Up/Cover Photo (SSU).jpg',
     stills: [
-      'Sunny Side-Up/Untitled_1.1.1.png',
-      'Sunny Side-Up/Untitled_1.5.1.png',
-      'Sunny Side-Up/Untitled_1.7.1.png',
-      'Sunny Side-Up/Untitled_1.13.1.png',
-      'Sunny Side-Up/Untitled_1.16.1.png',
-      'Sunny Side-Up/Untitled_1.17.1.png',
-      'Sunny Side-Up/Untitled_1.23.1.png',
-      'Sunny Side-Up/Untitled_1.32.1.png',
-      'Sunny Side-Up/Untitled_1.35.1.png',
-      'Sunny Side-Up/Untitled_1.39.1.png',
-      'Sunny Side-Up/Untitled_1.44.1.png',
-      'Sunny Side-Up/Untitled_1.45.1.png',
-      'Sunny Side-Up/Untitled_1.49.1.png',
-      'Sunny Side-Up/Untitled_1.51.1.png',
-      'Sunny Side-Up/Untitled_1.54.1.png',
-      'Sunny Side-Up/Untitled_1.55.1.png',
-      'Sunny Side-Up/Untitled_1.56.1.png',
-      'Sunny Side-Up/Untitled_1.57.1.png',
-      'Sunny Side-Up/Untitled_1.58.1.png',
-      'Sunny Side-Up/Untitled_1.59.1.png',
-      'Sunny Side-Up/Untitled_1.60.1.png',
+      'optimized/Sunny Side-Up/Cover Photo (SSU).jpg',
+      'optimized/Sunny Side-Up/Untitled_1.1.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.5.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.7.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.13.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.16.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.17.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.23.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.32.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.35.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.39.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.44.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.45.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.49.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.51.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.54.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.55.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.56.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.58.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.59.1.jpg',
+      'optimized/Sunny Side-Up/Untitled_1.60.1.jpg',
     ]
   },
 ];
 
+const PROJECT_ORDER = [
+  'breaking-bed',
+  'unfinished',
+  'disco-toilet',
+  'hearsay',
+  'ishtam-web',
+  'pieces-of-us',
+  'stay',
+  'mr-vincent',
+  'salta',
+  'below-the-surface',
+  'hazel',
+  'sunny-side-up',
+];
+
+PROJECTS.sort((a, b) => PROJECT_ORDER.indexOf(a.id) - PROJECT_ORDER.indexOf(b.id));
+
 // Hero images (one cover per project)
 const HERO_IMAGES = PROJECTS.map(p => ({ src: p.cover, label: p.title }));
+
+function projectTags(project) {
+  return [
+    project.type,
+    project.year,
+    project.director ? (project.directorLabel || 'Dir.') + ' ' + project.director : '',
+    project.dp ? 'DP ' + project.dp : '',
+    project.dop ? 'DOP ' + project.dop : '',
+    project.role,
+  ].filter(Boolean);
+}
 
 // ──────────────────────────────────────────
 // HERO CAROUSEL
@@ -892,7 +1122,10 @@ function renderProjects() {
       <div class="project-meta">
         <span class="project-type">${p.role}</span>
         <div class="project-name">${p.title}</div>
-        ${p.director ? `<span class="project-dir">Dir. ${p.director}</span>` : ''}
+        ${p.type ? `<span class="project-dir">${p.type}</span>` : ''}
+        ${p.director ? `<span class="project-dir">${p.directorLabel || 'Dir.'} ${p.director}</span>` : ''}
+        ${p.dp ? `<span class="project-dir">DP ${p.dp}</span>` : ''}
+        ${p.dop ? `<span class="project-dir">DOP ${p.dop}</span>` : ''}
         ${p.year ? `<span class="project-year">${p.year}</span>` : ''}
       </div>`;
 
@@ -909,11 +1142,11 @@ function initAbout() {
   const wrap = document.getElementById('aboutImg');
   const img  = document.createElement('img');
   img.src = 'headshot.jpg';
-  img.alt = 'Rohan Singhal';
+  img.alt = 'ROHAN SINGHAL';
   img.loading = 'lazy';
   const lbl = document.createElement('div');
   lbl.className = 'about-img-label';
-  lbl.textContent = 'Rohan Singhal';
+  lbl.textContent = 'ROHAN SINGHAL';
   wrap.appendChild(img);
   wrap.appendChild(lbl);
 }
@@ -926,15 +1159,40 @@ let lb = { project: null, idx: 0 };
 function lbOpen(id) {
   lb.project = PROJECTS.find(p => p.id === id);
   lb.idx = 0;
-  document.getElementById('lightbox').classList.add('open');
+  const lightbox = document.getElementById('lightbox');
+  lightbox.classList.add('open', 'gallery-mode');
+  lightbox.classList.remove('image-mode');
   document.body.style.overflow = 'hidden';
+  lbBuildGallery();
   lbBuildFilmstrip();
-  lbUpdate();
+  lbUpdateMeta();
 }
 
 function lbClose() {
-  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox').classList.remove('open', 'gallery-mode', 'image-mode');
   document.body.style.overflow = '';
+}
+
+function lbBuildGallery() {
+  const gallery = document.getElementById('lbGallery');
+  gallery.innerHTML = '';
+  lb.project.stills.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = lb.project.title;
+    img.loading = 'lazy';
+    img.className = 'lb-gallery-img';
+    img.onclick = () => lbShowImage(i);
+    gallery.appendChild(img);
+  });
+}
+
+function lbShowImage(i) {
+  lb.idx = i;
+  const lightbox = document.getElementById('lightbox');
+  lightbox.classList.remove('gallery-mode');
+  lightbox.classList.add('image-mode');
+  lbUpdate();
 }
 
 function lbBuildFilmstrip() {
@@ -958,9 +1216,7 @@ function lbUpdate() {
     img.style.opacity = '1';
   }, 100);
 
-  document.getElementById('lbTitle').textContent = lb.project.title;
-  document.getElementById('lbMeta').textContent  = lb.project.role + (lb.project.year ? ' · ' + lb.project.year : '') + (lb.project.director ? ' · Dir. ' + lb.project.director : '');
-  document.getElementById('lbCounter').textContent = `${lb.idx + 1} / ${lb.project.stills.length}`;
+  lbUpdateMeta();
 
   document.querySelectorAll('.lb-thumb').forEach((t, i) => {
     t.classList.toggle('active', i === lb.idx);
@@ -970,6 +1226,15 @@ function lbUpdate() {
   const strip = document.getElementById('lbFilmstrip');
   const active = strip.children[lb.idx];
   if (active) active.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+}
+
+function lbUpdateMeta() {
+  const lightbox = document.getElementById('lightbox');
+  document.getElementById('lbTitle').textContent = lb.project.title;
+  document.getElementById('lbMeta').textContent = projectTags(lb.project).join(' · ');
+  document.getElementById('lbCounter').textContent = lightbox.classList.contains('gallery-mode')
+    ? `Gallery · ${lb.project.stills.length} images`
+    : `${lb.idx + 1} / ${lb.project.stills.length}`;
 }
 
 function lbNav(dir) {
@@ -986,10 +1251,19 @@ document.getElementById('lightbox').addEventListener('click', e => {
 });
 
 document.addEventListener('keydown', e => {
-  if (!document.getElementById('lightbox').classList.contains('open')) return;
-  if (e.key === 'ArrowRight') lbNav(1);
-  if (e.key === 'ArrowLeft')  lbNav(-1);
-  if (e.key === 'Escape')     lbClose();
+  const lightbox = document.getElementById('lightbox');
+  if (!lightbox.classList.contains('open')) return;
+  if (lightbox.classList.contains('image-mode')) {
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'ArrowLeft')  lbNav(-1);
+    if (e.key === 'Escape') {
+      lightbox.classList.remove('image-mode');
+      lightbox.classList.add('gallery-mode');
+      lbUpdateMeta();
+    }
+    return;
+  }
+  if (e.key === 'Escape') lbClose();
 });
 
 // ──────────────────────────────────────────
